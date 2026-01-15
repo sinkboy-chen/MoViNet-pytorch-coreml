@@ -1,3 +1,5 @@
+Modified models.py so that models can be ported to Core ML while remaining mathematically equivalent to the original code.
+
 # MoViNet-pytorch
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Atze00/MoViNet-pytorch/blob/main/movinet_tutorial.ipynb)  [![Paper](http://img.shields.io/badge/Paper-arXiv.2103.11511-B3181B?logo=arXiv)](https://arxiv.org/abs/2103.11511) <br><br>
 Pytorch unofficial implementation of [MoViNets: Mobile Video Networks for Efficient Video Recognition](https://arxiv.org/pdf/2103.11511.pdf). <br>
@@ -16,7 +18,7 @@ model.clean_activation_buffers()
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Atze00/MoViNet-pytorch/blob/main/movinet_tutorial.ipynb) <br>
 Click on "Open in Colab" to open an example of training on HMDB-51 <br> 
 ### installation 
-```pip install git+https://github.com/Atze00/MoViNet-pytorch.git```
+```pip install git+https://github.com/sinkboy-chen/MoViNet-pytorch.git```
 
 #### How to build a model
 Use ```causal = True``` to use the model with stream buffer, causal = False will use standard convolutions<br>

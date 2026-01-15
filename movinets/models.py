@@ -323,7 +323,7 @@ class SqueezeExcitation(nn.Module):
             scale = self.temporal_cumualtive_GAvg3D(x_space)
             scale = torch.cat((scale, x_space), dim=1)
         else:
-            scale = F.adaptive_avg_pool3d(input, 1)
+            scale = torch.mean(input, dim=(2, 3, 4), keepdim=True)
         scale = self.fc1(scale)
         scale = self.activation_1(scale)
         scale = self.fc2(scale)
@@ -399,8 +399,16 @@ class tfAvgPool3D(nn.Module):
                                                padding=(0, 1, 1))
         else:
             x = self.avgf(x)
-            x[..., -1] = x[..., -1] * 9/6
-            x[..., -1, :] = x[..., -1, :] * 9/6
+            # Avoid in-place operations for CoreML conversion compatibility
+            # Original: x[..., -1] = x[..., -1] * 9/6
+            x_prefix_w = x[..., :-1]
+            x_last_w = x[..., -1:] * 1.5
+            x = torch.cat([x_prefix_w, x_last_w], dim=-1)
+            
+            # Original: x[..., -1, :] = x[..., -1, :] * 9/6
+            x_prefix_h = x[..., :-1, :]
+            x_last_h = x[..., -1:, :] * 1.5
+            x = torch.cat([x_prefix_h, x_last_h], dim=-2)
         return x
 
 
@@ -618,10 +626,10 @@ class MoViNet(nn.Module):
 
     def avg(self, x: Tensor) -> Tensor:
         if self.causal:
-            avg = F.adaptive_avg_pool3d(x, (x.shape[2], 1, 1))
+            avg = torch.mean(x, dim=(3, 4), keepdim=True)
             avg = self.cgap(avg)[:, :, -1:]
         else:
-            avg = F.adaptive_avg_pool3d(x, 1)
+            avg = torch.mean(x, dim=(2, 3, 4), keepdim=True)
         return avg
 
     @staticmethod
