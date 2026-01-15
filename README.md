@@ -18,7 +18,7 @@ model.clean_activation_buffers()
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Atze00/MoViNet-pytorch/blob/main/movinet_tutorial.ipynb) <br>
 Click on "Open in Colab" to open an example of training on HMDB-51 <br> 
 ### installation 
-```pip install git+https://github.com/sinkboy-chen/MoViNet-pytorch.git```
+```pip install git+https://github.com/sinkboy-chen/MoViNet-pytorch-coreml.git```
 
 #### How to build a model
 Use ```causal = True``` to use the model with stream buffer, causal = False will use standard convolutions<br>
